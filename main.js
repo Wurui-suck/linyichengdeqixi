@@ -6,18 +6,20 @@ let Y
 let StartOrDown = ('ontouchstart' in window) ? 'touchstart' : 'mousedown'
 bb.addEventListener(StartOrDown, (e) => {
     dragging = true
-    X = e.clientX
-    Y = e.clientY
+    X = e.clientX || e.targetTouches[0].clientX
+    Y = e.clientY || e.targetTouches[0].clientY
 
 })
 let TouchmoveOrMousemove = ('ontouchmove' in window) ? 'touchmove' : 'mousemove'
 document.body.addEventListener(TouchmoveOrMousemove, (e) => {
     if (dragging === true) {
-        let moveX = e.clientX - X
-        let moveY = e.clientY - Y
+        let currentX = e.clientX || e.targetTouches[0].clientX
+        let currentY = e.clientY || e.targetTouches[0].clientY
+        let moveX = currentX - X
+        let moveY = currentY - Y
         bb.style.transform = bb.style.transform + `translate(${moveX}px,${moveY}px)`
-        X = e.clientX
-        Y = e.clientY
+        X = currentX
+        Y = currentY
     }
     aaa = aa.getBoundingClientRect()
     bbb = bb.getBoundingClientRect()
