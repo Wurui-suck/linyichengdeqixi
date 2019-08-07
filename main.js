@@ -3,14 +3,15 @@ let aa = document.querySelector('#a')
 let dragging = false
 let X
 let Y
-bb.addEventListener('mousedown', (e) => {
+let StartOrDown = ('ontouchstart' in window) ? 'touchstart' : 'mousedown'
+bb.addEventListener(StartOrDown, (e) => {
     dragging = true
     X = e.clientX
     Y = e.clientY
 
 })
-
-document.body.addEventListener('mousemove', (e) => {
+let TouchmoveOrMousemove = ('ontouchmove' in window) ? 'touchmove' : 'mousemove'
+document.body.addEventListener(TouchmoveOrMousemove, (e) => {
     if (dragging === true) {
         let moveX = e.clientX - X
         let moveY = e.clientY - Y
@@ -39,7 +40,7 @@ document.body.addEventListener('mousemove', (e) => {
 
 }
 )
-
-document.addEventListener('mouseup', () => {
+let EndorUp = ('ontouchend' in window) ? 'touchend' : 'mouseup'
+document.addEventListener(EndorUp, () => {
     dragging = false
 })
